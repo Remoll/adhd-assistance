@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { Button } from "./ui/button";
+import useUserStore from "@/stores/user";
 
 const Header = () => {
+  const { logoutUser } = useUserStore();
+
   const pages = [
     { href: "/", label: "Dashboard" },
     { href: "/planner", label: "Planer" },
@@ -20,6 +24,9 @@ const Header = () => {
               </Link>
             </li>
           ))}
+          <li>
+            <Button onClick={logoutUser}>Logout</Button>
+          </li>
         </ul>
       </nav>
     </header>

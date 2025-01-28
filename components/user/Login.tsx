@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../ui/button";
 
 const schema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),
@@ -34,7 +35,7 @@ const Login = () => {
         <input {...register("password")} placeholder="password" />
         {errors.password && <span>{errors.password.message}</span>}
 
-        <button type="submit">Login</button>
+        <Button type="submit">Login</Button>
       </form>
     </>
   );
