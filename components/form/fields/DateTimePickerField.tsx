@@ -16,18 +16,15 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form";
+import { FieldValues, Path, PathValue } from "react-hook-form";
 import React from "react";
-
-interface DateTimePickerFieldType<T extends FieldValues> {
-  form: UseFormReturn<T>;
-  fieldId: Path<T>;
-}
+import { FieldProps } from "../types";
 
 const DateTimePickerField = <T extends FieldValues>({
   form,
   fieldId,
-}: DateTimePickerFieldType<T>) => {
+  label,
+}: FieldProps<T>) => {
   const handleDateSelect = (date: Date | undefined) => {
     console.log("date: ", date);
     if (date) {
@@ -56,7 +53,7 @@ const DateTimePickerField = <T extends FieldValues>({
       name={fieldId}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>Due date</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>

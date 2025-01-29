@@ -13,5 +13,9 @@ interface Task {
   steps: string[];
   completed: boolean;
 }
+interface PriorityOptions {
+  value: TaskPriority;
+  label: string;
+}
 
-export type { Task, TaskPriority };
+export { type Task, type PriorityOptions, TaskPriority };

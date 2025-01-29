@@ -2,34 +2,11 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Form } from "@/components/ui/form";
 import DateTimePickerField from "@/components/form/fields/DateTimePickerField";
+import SelectField from "@/components/form/fields/SelectField";
+import { PriorityOptions, TaskPriority } from "../types";
+import InputField from "@/components/form/fields/InputField";
 
 const formSchema = z.object({
   title: z.string(),
@@ -48,72 +25,42 @@ const TaskForm = () => {
     },
   });
 
-  function handleDateSelect(date: Date | undefined) {
-    console.log("date: ", date);
-    if (date) {
-      form.setValue("dueDate", date);
-    }
-  }
-
-  function handleTimeChange(type: "hour" | "minute", value: string) {
-    const currentDate = form.getValues("dueDate") || new Date();
-    const newDate = new Date(currentDate);
-
-    if (type === "hour") {
-      const hour = parseInt(value, 10);
-      newDate.setHours(hour);
-    } else if (type === "minute") {
-      newDate.setMinutes(parseInt(value, 10));
-    }
-
-    form.setValue("dueDate", newDate);
-  }
-
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
 
+  const priorityOptions: PriorityOptions[] = [
+    {
+      value: TaskPriority.urgentImportand,
+      label: "Urgent Important",
+    },
+    {
+      value: TaskPriority.urgentNotImportant,
+      label: "Urgent not Important",
+    },
+    {
+      value: TaskPriority.notUrgentImportant,
+      label: "not Urgent Important",
+    },
+    {
+      value: TaskPriority.notUrgentNotImportant,
+      label: "not Urgent not Important",
+    },
+  ];
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <InputField form={form} fieldId="title" label="Title" />
+
+        <SelectField
+          form={form}
+          fieldId="priority"
+          label="Priority"
+          options={priorityOptions}
         />
 
-        <FormField
-          control={form.control}
-          name="priority"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Priority</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select priority" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <DateTimePickerField form={form} fieldId="dueDate" />
+        <DateTimePickerField form={form} fieldId="dueDate" label="Due date" />
 
         <Button type="submit">Add task</Button>
       </form>
