@@ -1,6 +1,6 @@
 enum TaskPriority {
   urgentImportand = "urgent-important",
-  notUrgentImportant = "important-not-urgent",
+  notUrgentImportant = "not-urgent-important",
   urgentNotImportant = "urgent-not-important",
   notUrgentNotImportant = "not-urgent-not-important",
 }

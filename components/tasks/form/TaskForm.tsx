@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DateTimePickerField from "@/components/form/fields/DateTimePickerField";
 import SelectField from "@/components/form/fields/SelectField";
-import { PriorityOptions, TaskPriority } from "../types";
 import InputField from "@/components/form/fields/InputField";
+import { useTasksStore } from "@/stores/tasks";
+import { priorityOptions } from "../utils";
 
 const formSchema = z.object({
   title: z.string(),
@@ -16,6 +17,8 @@ const formSchema = z.object({
 });
 
 const TaskForm = () => {
+  const { addTask } = useTasksStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,27 +29,9 @@ const TaskForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    addTask(values);
     console.log(values);
   }
-
-  const priorityOptions: PriorityOptions[] = [
-    {
-      value: TaskPriority.urgentImportand,
-      label: "Urgent Important",
-    },
-    {
-      value: TaskPriority.urgentNotImportant,
-      label: "Urgent not Important",
-    },
-    {
-      value: TaskPriority.notUrgentImportant,
-      label: "not Urgent Important",
-    },
-    {
-      value: TaskPriority.notUrgentNotImportant,
-      label: "not Urgent not Important",
-    },
-  ];
 
   return (
     <Form {...form}>

@@ -1,5 +1,7 @@
+import TasksMatrix from "@/components/tasks/preview/matrix/TasksMatrix";
+
 const Dashboard = () => {
-  return <h2 className="text-2xl font-bold">Dashboard</h2>;
+  return <TasksMatrix />;
 };
 
 export default Dashboard;
