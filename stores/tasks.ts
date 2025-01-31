@@ -1,13 +1,13 @@
-import { Task, TaskForm } from "@/components/tasks/types";
+import { Task, TaskInitials } from "@/components/tasks/types";
 import { supabase } from "@/utils/supabaseClient";
 import { create } from "zustand";
 
 interface TaskStore {
   tasks: Task[];
   fetchTasks: () => void;
-  addTask: (task: TaskForm) => void;
+  addTask: (task: TaskInitials) => void;
   toggleTaskCompletion: (taskId: string) => void;
-  editTask: (taskId: string, newTaskData: TaskForm) => void;
+  editTask: (taskId: string, newTaskData: TaskInitials) => void;
   removeTask: (taskId: string) => void;
 }
 

@@ -65,7 +65,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         <Pen />
       </Button>
     ),
-    customContent: <TaskForm formRef={formRef} task={task} isExternalConfirm />,
+    customContent: (
+      <TaskForm formRef={formRef} task={task} hasExternalConfirm />
+    ),
   };
 
   return (

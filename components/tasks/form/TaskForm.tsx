@@ -8,38 +8,40 @@ import SelectField from "@/components/form/fields/SelectField";
 import InputField from "@/components/form/fields/InputField";
 import { useTasksStore } from "@/stores/tasks";
 import { priorityOptions } from "../utils";
-import { Task } from "../types";
+import { Task, TaskInitials, TaskPriority } from "../types";
 import React from "react";
 
+const priorityEnum = z.nativeEnum(TaskPriority);
+
 const formSchema = z.object({
-  title: z.string(),
-  priority: z.string(),
-  due_date: z.date(),
+  title: z.string().min(1, "Title is required"),
+  priority: priorityEnum,
+  due_date: z.date().nullable(),
 });
 
 interface TaskFormProps {
   task?: Task;
-  isExternalConfirm?: boolean;
+  hasExternalConfirm?: boolean;
   formRef: React.RefObject<HTMLFormElement | null>;
 }
 
 const TaskForm: React.FC<TaskFormProps> = ({
   task,
-  isExternalConfirm,
+  hasExternalConfirm,
   formRef,
 }) => {
   const { addTask, editTask } = useTasksStore();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<TaskInitials>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: task?.title || "",
-      priority: task?.priority || "",
-      due_date: task?.due_date ? new Date(task.due_date) : null,
+      priority: task?.priority || TaskPriority.urgentImportand,
+      due_date: task?.due_date ? new Date(task.due_date) : undefined,
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: TaskInitials) => {
     console.log("values: ", values);
 
     if (task) {
@@ -47,7 +49,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     } else {
       addTask(values);
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -67,7 +69,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
         <DateTimePickerField form={form} fieldId="due_date" label="Due date" />
 
-        {!isExternalConfirm && <Button type="submit">Add task</Button>}
+        {!hasExternalConfirm && <Button type="submit">Add task</Button>}
       </form>
     </Form>
   );
