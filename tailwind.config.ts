@@ -51,16 +51,16 @@ export default {
           "5": "hsl(var(--chart-5))",
         },
         red: {
-          600: "#dc2626",
+          600: "#e3342f",
         },
         blue: {
-          600: "#2563eb",
+          600: "#3490dc",
         },
         green: {
-          600: "#16a34a",
+          600: "#38c172",
         },
         yellow: {
-          600: "#ca8a04",
+          600: "#ffed4a",
         },
       },
       borderRadius: {
