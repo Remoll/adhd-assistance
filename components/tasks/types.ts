@@ -5,12 +5,14 @@ enum TaskPriority {
   notUrgentNotImportant = "not-urgent-not-important",
 }
 
-interface Task {
-  id: string;
+interface TaskForm {
   title: string;
   priority: TaskPriority;
-  dueDate: string;
-  steps: string[];
+  due_date: string;
+}
+
+interface Task extends TaskForm {
+  id: string;
   completed: boolean;
 }
 
@@ -26,4 +28,10 @@ enum MatrixColor {
   green = "green",
 }
 
-export { type Task, type PriorityOptions, TaskPriority, MatrixColor };
+export {
+  type TaskForm,
+  type Task,
+  type PriorityOptions,
+  TaskPriority,
+  MatrixColor,
+};

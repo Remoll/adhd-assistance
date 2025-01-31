@@ -1,12 +1,13 @@
-import { Task } from "@/components/tasks/types";
+import { Task, TaskForm } from "@/components/tasks/types";
 import { supabase } from "@/utils/supabaseClient";
 import { create } from "zustand";
 
 interface TaskStore {
   tasks: Task[];
   fetchTasks: () => void;
-  addTask: (task: Task) => void;
+  addTask: (task: TaskForm) => void;
   toggleTaskCompletion: (taskId: string) => void;
+  editTask: (taskId: string, newTaskData: TaskForm) => void;
   removeTask: (taskId: string) => void;
 }
 
@@ -21,15 +22,9 @@ const useTasksStore = create<TaskStore>((set) => ({
     }
   },
   addTask: async (task) => {
-    const newTask = {
-      due_date: task.dueDate,
-      priority: task.priority,
-      title: task.title,
-    };
-
     const { data, error } = await supabase
       .from("tasks")
-      .insert([newTask])
+      .insert([task])
       .select();
     if (error) {
       console.error("Błąd dodawania zadania:", error);
@@ -66,6 +61,27 @@ const useTasksStore = create<TaskStore>((set) => ({
             : task
         ),
       }));
+    }
+  },
+  editTask: async (taskId, newTaskData) => {
+    try {
+      const { error } = await supabase
+        .from("tasks")
+        .update(newTaskData)
+        .eq("id", taskId);
+
+      if (error) {
+        throw new Error("Błąd edycji zadania");
+      } else {
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === taskId ? { ...task, ...newTaskData } : task
+          ),
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
   },
   removeTask: async (taskId: string) => {

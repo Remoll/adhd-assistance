@@ -17,6 +17,7 @@ interface CustomDialogProps {
   onConfirm: () => void;
   triggerButtonLabel?: string;
   customTrigger?: React.ReactNode;
+  customContent?: React.ReactNode;
 }
 
 const CustomDialog: React.FC<CustomDialogProps> = ({
@@ -25,6 +26,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
   onConfirm,
   triggerButtonLabel,
   customTrigger,
+  customContent,
 }) => {
   return (
     <Dialog>
@@ -38,6 +40,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
+        {customContent}
         <DialogFooter>
           <Button onClick={onConfirm}>Confirm</Button>
           <DialogClose asChild>

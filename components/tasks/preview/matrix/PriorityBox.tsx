@@ -23,10 +23,7 @@ const PriorityBox: React.FC<PriorityBoxProps> = ({ color, label, tasks }) => {
       <h1 className="text-gray-700 font-bold text-lg mb-2">{label}</h1>
       <ul className="space-y-2">
         {tasks.map((task) => (
-          <li
-            key={task.id}
-            className="text-gray-600 flex items-center space-x-2"
-          >
+          <li key={task.id}>
             <TaskItem task={task} />
           </li>
         ))}
