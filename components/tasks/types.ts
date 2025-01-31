@@ -13,9 +13,17 @@ interface Task {
   steps: string[];
   completed: boolean;
 }
+
 interface PriorityOptions {
   value: TaskPriority;
   label: string;
 }
 
-export { type Task, type PriorityOptions, TaskPriority };
+enum MatrixColor {
+  red = "red",
+  yellow = "yellow",
+  blue = "blue",
+  green = "green",
+}
+
+export { type Task, type PriorityOptions, TaskPriority, MatrixColor };

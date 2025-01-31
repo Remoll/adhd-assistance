@@ -68,10 +68,22 @@ const useTasksStore = create<TaskStore>((set) => ({
       }));
     }
   },
-  removeTask: (taskId: string) =>
-    set((state) => ({
-      tasks: state.tasks.filter((task) => task.id !== taskId),
-    })),
+  removeTask: async (taskId: string) => {
+    try {
+      const { error } = await supabase.from("tasks").delete().eq("id", taskId);
+
+      if (error) {
+        throw new Error("Błąd usuwania zadania");
+      } else {
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== taskId),
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
 }));
 
 export { useTasksStore };

@@ -1,18 +1,15 @@
 import React from "react";
-import { Task } from "../../types";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useTasksStore } from "@/stores/tasks";
+import { MatrixColor, Task } from "../../types";
+import TaskItem from "../TaskItem";
 
 interface PriorityBoxProps {
-  color: string;
+  color: MatrixColor;
   label: string;
   tasks: Task[];
 }
 
 const PriorityBox: React.FC<PriorityBoxProps> = ({ color, label, tasks }) => {
-  const { toggleTaskCompletion } = useTasksStore();
-
-  const bgClasses = {
+  const bgClasses: Record<MatrixColor, string> = {
     red: "bg-red-600",
     yellow: "bg-yellow-600",
     blue: "bg-blue-600",
@@ -30,17 +27,7 @@ const PriorityBox: React.FC<PriorityBoxProps> = ({ color, label, tasks }) => {
             key={task.id}
             className="text-gray-600 flex items-center space-x-2"
           >
-            <Checkbox
-              checked={task.completed}
-              onCheckedChange={() => toggleTaskCompletion(task.id)}
-            />
-            <h3
-              className={
-                task.completed ? "line-through text-gray-500" : "font-semibold"
-              }
-            >
-              {task.title}
-            </h3>
+            <TaskItem task={task} />
           </li>
         ))}
       </ul>

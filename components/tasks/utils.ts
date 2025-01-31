@@ -1,4 +1,4 @@
-import { PriorityOptions, TaskPriority } from "./types";
+import { MatrixColor, PriorityOptions, TaskPriority } from "./types";
 
 const priorityOptions: PriorityOptions[] = [
   {
@@ -31,11 +31,11 @@ const getPriorityLabel = (key: TaskPriority) => {
 };
 
 const getPriorityColor = (key: TaskPriority) => {
-  const colors: Record<TaskPriority, string> = {
-    [TaskPriority.urgentImportand]: "green",
-    [TaskPriority.notUrgentImportant]: "yellow",
-    [TaskPriority.urgentNotImportant]: "blue",
-    [TaskPriority.notUrgentNotImportant]: "red",
+  const colors: Record<TaskPriority, MatrixColor> = {
+    [TaskPriority.urgentImportand]: MatrixColor.green,
+    [TaskPriority.notUrgentImportant]: MatrixColor.yellow,
+    [TaskPriority.urgentNotImportant]: MatrixColor.blue,
+    [TaskPriority.notUrgentNotImportant]: MatrixColor.red,
   };
 
   return colors[key];
