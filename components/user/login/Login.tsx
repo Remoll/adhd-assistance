@@ -1,9 +1,9 @@
-import useUserStore from "@/stores/user";
+import useUserStore from "@/stores/user/user";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const schema = z.object({
   email: z.string().email("Invalid email address").min(1, "Email is required"),

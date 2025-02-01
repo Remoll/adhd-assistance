@@ -1,7 +1,7 @@
-import { useTasksStore } from "@/stores/tasks";
+import { useTasksStore } from "@/stores/tasks/tasks";
 import { useEffect } from "react";
 import TasksPriorityBox from "./TasksPriorityBox";
-import { TaskPriority } from "../../types";
+import { TaskPriority } from "../types";
 
 const TasksMatrix = () => {
   const { fetchTasks } = useTasksStore();

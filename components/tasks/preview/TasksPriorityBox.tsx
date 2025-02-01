@@ -1,8 +1,8 @@
 import React from "react";
-import { TaskPriority } from "../../types";
-import { getPriorityColor, getPriorityLabel } from "../../utils";
+import { TaskPriority } from "../types";
+import { getPriorityColor, getPriorityLabel } from "../utils";
 import PriorityBox from "./PriorityBox";
-import { useTasksStore } from "@/stores/tasks";
+import { useTasksStore } from "@/stores/tasks/tasks";
 
 interface TasksPriorityBoxProps {
   tasksPriority: TaskPriority;

@@ -1,6 +1,6 @@
 import React from "react";
-import { MatrixColor, Task } from "../../types";
-import TaskItem from "../TaskItem";
+import { MatrixColor, Task } from "../types";
+import TaskItem from "./TaskItem";
 
 interface PriorityBoxProps {
   color: MatrixColor;

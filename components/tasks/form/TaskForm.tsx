@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import DateTimePickerField from "@/components/form/fields/DateTimePickerField";
-import SelectField from "@/components/form/fields/SelectField";
-import InputField from "@/components/form/fields/InputField";
-import { useTasksStore } from "@/stores/tasks";
+import SelectField from "@/components/ui/custom/form/fields/selectField/SelectField";
+import { useTasksStore } from "@/stores/tasks/tasks";
 import { priorityOptions } from "../utils";
 import { Task, TaskInitials, TaskPriority } from "../types";
 import React from "react";
+import DateTimePickerField from "@/components/ui/custom/form/fields/dateTimePickerField/DateTimePickerField";
+import InputField from "@/components/ui/custom/form/fields/inputField/InputField";
 
 const priorityEnum = z.nativeEnum(TaskPriority);
 
@@ -22,7 +22,7 @@ const formSchema = z.object({
 interface TaskFormProps {
   task?: Task;
   hasExternalConfirm?: boolean;
-  formRef: React.RefObject<HTMLFormElement | null>;
+  formRef?: React.RefObject<HTMLFormElement | null>;
 }
 
 const TaskForm: React.FC<TaskFormProps> = ({

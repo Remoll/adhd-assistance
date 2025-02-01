@@ -1,5 +1,5 @@
 import { Task, TaskInitials } from "@/components/tasks/types";
-import { supabase } from "@/utils/supabaseClient";
+import { supabase } from "@/utils/supabase/supabaseClient";
 
 const TABLE = "tasks";
 

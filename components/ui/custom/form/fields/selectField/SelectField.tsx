@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FieldValues } from "react-hook-form";
-import { FieldProps } from "../types";
+import { FieldProps } from "../../types";
 
 interface Option {
   value: string;

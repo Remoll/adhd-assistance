@@ -1,4 +1,4 @@
-import TasksMatrix from "@/components/tasks/preview/matrix/TasksMatrix";
+import TasksMatrix from "@/components/tasks/preview/TasksMatrix";
 
 const Dashboard = () => {
   return <TasksMatrix />;
