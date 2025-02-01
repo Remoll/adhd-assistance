@@ -26,7 +26,8 @@ const useTasksStore = create<TaskStore>((set) => ({
   addTask: async (task) => {
     try {
       const { data } = await axios.post(TASK_URL, task);
-      set((state) => ({ tasks: [...state.tasks, ...data] }));
+
+      set((state) => ({ tasks: [...state.tasks, data] }));
     } catch (error) {
       console.error("Błąd dodawania zadania:", error);
     }
@@ -37,7 +38,7 @@ const useTasksStore = create<TaskStore>((set) => ({
 
       const newTaskData = { ...data, completed: !data.completed };
 
-      await axios.put(TASK_URL, { ...newTaskData, id: taskId });
+      await axios.put(`${TASK_URL}/${taskId}`, newTaskData);
 
       set((state) => ({
         tasks: state.tasks.map((task) =>
@@ -50,7 +51,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   },
   editTask: async (taskId, newTaskData) => {
     try {
-      await axios.put(TASK_URL, { ...newTaskData, id: taskId });
+      await axios.put(`${TASK_URL}/${taskId}`, newTaskData);
       set((state) => ({
         tasks: state.tasks.map((task) =>
           task.id === taskId ? { ...task, ...newTaskData } : task
@@ -62,7 +63,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   },
   removeTask: async (taskId: string) => {
     try {
-      await axios.delete(TASK_URL, { data: { id: taskId } });
+      await axios.delete(`${TASK_URL}/${taskId}`);
       set((state) => ({
         tasks: state.tasks.filter((task) => task.id !== taskId),
       }));

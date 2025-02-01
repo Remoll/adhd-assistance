@@ -1,5 +1,5 @@
-import { supabase } from "@/utils/supabaseClient";
 import { Session, User } from "@supabase/supabase-js";
+import axios from "axios";
 import { create } from "zustand";
 
 type UserStoreType = {
@@ -18,30 +18,25 @@ const useUserStore = create<UserStoreType>((set) => ({
     set({ user, session }),
 
   loginUser: async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data } = await axios.post("/api/user/login", {
+        email,
+        password,
+      });
 
-    if (error) {
-      console.error("Błąd logowania:", error.message);
-      return;
-    } else {
-      console.log("Użytkownik zalogowany");
+      return set({ user: data.user, session: data.session });
+    } catch (error) {
+      console.error(error);
     }
-
-    return set({ user: data.user, session: data.session });
   },
 
   logoutUser: async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      console.error("Błąd wylogowania:", error.message);
-    } else {
-      console.log("Użytkownik wylogowany.");
+    try {
+      await axios.post("/api/user/logout");
+      return set({ user: null, session: null });
+    } catch (error) {
+      console.error(error);
     }
-    return set({ user: null, session: null });
   },
 }));
 

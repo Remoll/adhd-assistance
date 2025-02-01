@@ -1,3 +1,5 @@
+// TODO: handle api ??
+
 import { useEffect } from "react";
 import useUserStore from "@/stores/user";
 import { supabase } from "@/utils/supabaseClient";
