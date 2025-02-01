@@ -1,6 +1,6 @@
 import { Task, TaskInitials } from "@/components/tasks/types";
-import { supabase } from "@/utils/supabaseClient";
 import { create } from "zustand";
+import axios from "axios";
 
 interface TaskStore {
   tasks: Task[];
@@ -11,93 +11,63 @@ interface TaskStore {
   removeTask: (taskId: string) => void;
 }
 
+const TASK_URL = "/api/tasks";
+
 const useTasksStore = create<TaskStore>((set) => ({
   tasks: [],
   fetchTasks: async () => {
-    const { data, error } = await supabase.from("tasks").select("*");
-    if (error) {
-      console.error("Błąd pobierania zadań:", error);
-    } else {
+    try {
+      const { data } = await axios.get(TASK_URL);
       set({ tasks: data });
+    } catch (error) {
+      console.error("Błąd pobierania zadań:", error);
     }
   },
   addTask: async (task) => {
-    const { data, error } = await supabase
-      .from("tasks")
-      .insert([task])
-      .select();
-    if (error) {
-      console.error("Błąd dodawania zadania:", error);
-    } else {
+    try {
+      const { data } = await axios.post(TASK_URL, task);
       set((state) => ({ tasks: [...state.tasks, ...data] }));
+    } catch (error) {
+      console.error("Błąd dodawania zadania:", error);
     }
   },
   toggleTaskCompletion: async (taskId: string) => {
-    const { data, error } = await supabase
-      .from("tasks")
-      .select("completed")
-      .eq("id", taskId)
-      .single();
+    try {
+      const { data } = await axios.get(`${TASK_URL}/${taskId}`);
 
-    if (error) {
-      console.error("Błąd pobierania zadania:", error);
-      return;
-    }
+      const newTaskData = { ...data, completed: !data.completed };
 
-    const updatedTask = { completed: !data.completed };
+      await axios.put(TASK_URL, { ...newTaskData, id: taskId });
 
-    const { error: updateError } = await supabase
-      .from("tasks")
-      .update(updatedTask)
-      .eq("id", taskId);
-
-    if (updateError) {
-      console.error("Błąd aktualizacji zadania:", updateError);
-    } else {
       set((state) => ({
         tasks: state.tasks.map((task) =>
-          task.id === taskId
-            ? { ...task, completed: updatedTask.completed }
-            : task
+          task.id === taskId ? { ...task, ...newTaskData } : task
         ),
       }));
+    } catch (error) {
+      console.error("Błąd pobierania zadania:", error);
     }
   },
   editTask: async (taskId, newTaskData) => {
     try {
-      const { error } = await supabase
-        .from("tasks")
-        .update(newTaskData)
-        .eq("id", taskId);
-
-      if (error) {
-        throw new Error("Błąd edycji zadania");
-      } else {
-        set((state) => ({
-          tasks: state.tasks.map((task) =>
-            task.id === taskId ? { ...task, ...newTaskData } : task
-          ),
-        }));
-      }
+      await axios.put(TASK_URL, { ...newTaskData, id: taskId });
+      set((state) => ({
+        tasks: state.tasks.map((task) =>
+          task.id === taskId ? { ...task, ...newTaskData } : task
+        ),
+      }));
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.error("Błąd edycji zadania:", error);
     }
   },
   removeTask: async (taskId: string) => {
     try {
-      const { error } = await supabase.from("tasks").delete().eq("id", taskId);
-
-      if (error) {
-        throw new Error("Błąd usuwania zadania");
-      } else {
-        set((state) => ({
-          tasks: state.tasks.filter((task) => task.id !== taskId),
-        }));
-      }
+      await axios.delete(TASK_URL, { data: { id: taskId } });
+      set((state) => ({
+        tasks: state.tasks.filter((task) => task.id !== taskId),
+      }));
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.error("Błąd usuwania zadania:", error);
     }
   },
 }));

@@ -47,8 +47,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   };
 
   const handleEditTask = () => {
-    console.log("formRef: ", formRef);
-    console.log("formRef.current: ", formRef.current);
     if (formRef.current) {
       formRef.current.dispatchEvent(
         new Event("submit", { cancelable: true, bubbles: true })
