@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import dataBaseResponseHandler from "./dataBaseResponseHandler";
+import dbResponseHandler from "./dbResponseHandler";
 import { ResponseError, ResponseSuccess } from "../types";
 
 interface ExampleData {
@@ -9,14 +9,14 @@ interface ExampleData {
 
 const unhandledResponse = "Unhandled response";
 
-describe("dataBaseResponseHandler", () => {
+describe("dbResponseHandler", () => {
   it("return data and error as null on success", () => {
     const responseSuccess: ResponseSuccess<ExampleData> = {
       data: { title: "Title1", id: "1" },
       error: null,
     };
 
-    const result = dataBaseResponseHandler<ExampleData>(responseSuccess);
+    const result = dbResponseHandler<ExampleData>(responseSuccess);
 
     expect(result).toStrictEqual({
       data: { title: "Title1", id: "1" },
@@ -30,19 +30,19 @@ describe("dataBaseResponseHandler", () => {
       error: { message: "Error message" },
     };
 
-    const result = dataBaseResponseHandler(responseSuccess);
+    const result = dbResponseHandler(responseSuccess);
 
     expect(result).toStrictEqual({ data: null, error: "Error message" });
   });
 
   it("return data as null and unhandled response error if response is null", () => {
-    const result = dataBaseResponseHandler(null);
+    const result = dbResponseHandler(null);
 
     expect(result).toStrictEqual({ data: null, error: unhandledResponse });
   });
 
   it("return data as null and unhandled response error if response is null", () => {
-    const result = dataBaseResponseHandler(null);
+    const result = dbResponseHandler(null);
 
     expect(result).toStrictEqual({ data: null, error: unhandledResponse });
   });

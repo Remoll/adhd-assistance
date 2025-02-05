@@ -1,6 +1,6 @@
 import { ResponseError, ResponseSuccess, Result } from "../types";
 
-const dataBaseResponseHandler = <T>(
+const dbResponseHandler = <T>(
   response: ResponseSuccess<T | T[]> | ResponseError | null | undefined
 ): Result<T> => {
   if (!response) {
@@ -17,4 +17,4 @@ const dataBaseResponseHandler = <T>(
   return { data, error: null };
 };
 
-export default dataBaseResponseHandler;
+export default dbResponseHandler;
