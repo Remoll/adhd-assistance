@@ -11,6 +11,8 @@ import { Task, TaskInitials, TaskPriority } from "@/components/tasks/types";
 
 const tableName = "tasks";
 
+const errorMessage = "Error message";
+
 const newTaskInitials: TaskInitials = {
   title: "Task1",
   priority: TaskPriority.urgentImportand,
@@ -74,6 +76,13 @@ describe("tasks services", () => {
         error: "Database error",
       });
     });
+
+    it("check that all methods have been called with proper attributes", async () => {
+      await fetchTasks();
+
+      expect(supabase.from).toHaveBeenCalledWith(tableName);
+      expect(supabase.from(tableName).select).toHaveBeenCalledWith("*");
+    });
   });
 
   describe("fetchTaskById", () => {
@@ -90,6 +99,28 @@ describe("tasks services", () => {
         data: newTask,
         error: null,
       });
+    });
+
+    it("return error if fetching fail", async () => {
+      mocks.supabase.select.mockReturnThis();
+      mocks.supabase.single.mockResolvedValue({
+        data: null,
+        error: { message: errorMessage },
+      });
+
+      const task = await fetchTaskById("1");
+
+      expect(task).toStrictEqual({
+        data: null,
+        error: errorMessage,
+      });
+    });
+
+    it("check that all methods have been called with proper attributes", async () => {
+      mocks.supabase.select.mockReturnThis();
+
+      await fetchTaskById("1");
+
       expect(supabase.from).toHaveBeenCalledWith(tableName);
       expect(supabase.from(tableName).select).toHaveBeenCalledWith("*");
       expect(supabase.from(tableName).select("*").eq).toHaveBeenCalledWith(
@@ -97,37 +128,51 @@ describe("tasks services", () => {
         "1"
       );
     });
-
-    it("return error if fetching fail", async () => {
-      mocks.supabase.select.mockReturnThis();
-      mocks.supabase.single.mockResolvedValue({
-        data: null,
-        error: { message: "Error message" },
-      });
-
-      const task = await fetchTaskById("1");
-
-      expect(task).toStrictEqual({
-        data: null,
-        error: "Error message",
-      });
-    });
   });
 
   describe("addTask", () => {
-    it("add provided task data", async () => {
+    it("return data of adding task as object in table on success", async () => {
       mocks.supabase.insert.mockReturnThis();
       mocks.supabase.select.mockResolvedValue({
-        data: [newTaskInitials],
+        data: [newTask],
         error: null,
       });
 
       const resolve = await addTask(newTaskInitials);
 
       expect(resolve).toStrictEqual({
-        data: [newTaskInitials],
+        data: [newTask],
         error: null,
       });
+      expect(supabase.from).toHaveBeenCalledWith(tableName);
+      expect(supabase.from(tableName).insert).toHaveBeenCalledWith([
+        newTaskInitials,
+      ]);
+      expect(
+        supabase.from(tableName).insert([newTaskInitials]).select
+      ).toHaveBeenCalledWith();
+    });
+
+    it("return error message on fail and data as null", async () => {
+      mocks.supabase.insert.mockReturnThis();
+      mocks.supabase.select.mockResolvedValue({
+        data: null,
+        error: { message: errorMessage },
+      });
+
+      const resolve = await addTask(newTaskInitials);
+
+      expect(resolve).toStrictEqual({
+        data: null,
+        error: errorMessage,
+      });
+    });
+
+    it("check that all methods have been called with proper attributes", async () => {
+      mocks.supabase.insert.mockReturnThis();
+
+      await addTask(newTaskInitials);
+
       expect(supabase.from).toHaveBeenCalledWith(tableName);
       expect(supabase.from(tableName).insert).toHaveBeenCalledWith([
         newTaskInitials,
@@ -139,18 +184,37 @@ describe("tasks services", () => {
   });
 
   describe("editTask", () => {
-    it("edit task by provided data", async () => {
+    it("return data and error as null on success", async () => {
       mocks.supabase.eq.mockResolvedValue({
-        data: [newTaskInitials],
+        data: null,
         error: null,
       });
 
       const resolve = await editTask("1", newTaskInitials);
 
       expect(resolve).toEqual({
-        data: [newTaskInitials],
+        data: null,
         error: null,
       });
+    });
+
+    it("return error message and data as null on fail", async () => {
+      mocks.supabase.eq.mockResolvedValue({
+        data: null,
+        error: { message: errorMessage },
+      });
+
+      const resolve = await editTask("1", newTaskInitials);
+
+      expect(resolve).toEqual({
+        data: null,
+        error: errorMessage,
+      });
+    });
+
+    it("check that all methods have been called with proper attributes", async () => {
+      await editTask("1", newTaskInitials);
+
       expect(supabase.from).toHaveBeenCalledWith(tableName);
       expect(supabase.from(tableName).update).toHaveBeenCalledWith(
         newTaskInitials
@@ -162,18 +226,37 @@ describe("tasks services", () => {
   });
 
   describe("removeTask", () => {
-    it("remove task by provided id", async () => {
+    it("return data and error as null on success", async () => {
       mocks.supabase.eq.mockResolvedValue({
-        data: [newTaskInitials],
+        data: null,
         error: null,
       });
 
       const resolve = await removeTask("1");
 
       expect(resolve).toEqual({
-        data: [newTaskInitials],
+        data: null,
         error: null,
       });
+    });
+
+    it("return error message and data as null on fail", async () => {
+      mocks.supabase.eq.mockResolvedValue({
+        data: null,
+        error: { message: errorMessage },
+      });
+
+      const resolve = await removeTask("1");
+
+      expect(resolve).toEqual({
+        data: null,
+        error: errorMessage,
+      });
+    });
+
+    it("check that all methods have been called with proper attributes", async () => {
+      await removeTask("1");
+
       expect(supabase.from).toHaveBeenCalledWith(tableName);
       expect(supabase.from(tableName).delete).toHaveBeenCalledWith();
       expect(supabase.from(tableName).delete().eq).toHaveBeenCalledWith(

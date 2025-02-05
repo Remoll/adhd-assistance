@@ -1,8 +1,7 @@
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { Result } from "./types";
+import { ResponseError, ResponseSuccess, Result } from "./types";
 
 const responseHandler = <T>(
-  response: PostgrestSingleResponse<T | T[]>
+  response: ResponseSuccess<T | T[]> | ResponseError
 ): Result<T> => {
   const { data, error } = response;
 
