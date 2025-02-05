@@ -1,10 +1,10 @@
 import dbToApiAdapter from "@/services/dbToApiAdapter/dbToApiAdapter";
 import {
-  fetchTaskById,
-  editTask,
-  removeTask,
+  getTaskFromDbById,
+  editTaskInDb,
+  removeTaskFromDb,
 } from "@/services/modules/tasks/service";
-import { Method } from "@/services/types";
+import { DbMethod } from "@/services/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,18 +17,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   switch (method) {
-    case Method.get: {
-      const result = await fetchTaskById(id);
+    case DbMethod.get: {
+      const result = await getTaskFromDbById(id);
       return dbToApiAdapter(result, res);
     }
 
-    case Method.put: {
-      const result = await editTask(id, req.body);
+    case DbMethod.put: {
+      const result = await editTaskInDb(id, req.body);
       return dbToApiAdapter(result, res);
     }
 
-    case Method.delete: {
-      const result = await removeTask(id);
+    case DbMethod.delete: {
+      const result = await removeTaskFromDb(id);
       return dbToApiAdapter(result, res);
     }
 

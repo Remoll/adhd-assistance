@@ -27,10 +27,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         description: `You succesfully remove task "${task.title}"`,
       });
     } catch (error) {
-      console.error(error);
       toast({
         title: "Error",
-        description: `Failed to remove task "${task.title}"`,
+        description: error.message,
       });
     }
   };
@@ -68,11 +67,29 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     ),
   };
 
+  const handleToggleTaskCompletion = async () => {
+    try {
+      await toggleTaskCompletion(task.id);
+
+      toast({
+        title: "Success",
+        description: `You successfully ${
+          task.completed ? "uncomplete" : "complete"
+        } task: "${task.title}"`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
+    }
+  };
+
   return (
     <div className="text-gray-600 flex items-center space-x-2">
       <Checkbox
         checked={task.completed}
-        onCheckedChange={() => toggleTaskCompletion(task.id)}
+        onCheckedChange={() => handleToggleTaskCompletion()}
       />
       <h3
         className={

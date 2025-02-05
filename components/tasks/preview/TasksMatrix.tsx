@@ -2,13 +2,26 @@ import { useTasksStore } from "@/stores/tasks/tasks";
 import { useEffect } from "react";
 import TasksPriorityBox from "./TasksPriorityBox";
 import { TaskPriority } from "../types";
+import { useToast } from "@/hooks/use-toast";
 
 const TasksMatrix = () => {
   const { fetchTasks } = useTasksStore();
+  const { toast } = useToast();
 
   useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+    const handleFetchTasks = async () => {
+      try {
+        await fetchTasks();
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: error.message,
+        });
+      }
+    };
+
+    handleFetchTasks();
+  }, [fetchTasks, toast]);
 
   return (
     <div className="grid grid-cols-2 gap-1">

@@ -10,6 +10,7 @@ import { Task, TaskInitials, TaskPriority } from "../types";
 import React from "react";
 import DateTimePickerField from "@/components/ui/custom/form/fields/dateTimePickerField/DateTimePickerField";
 import InputField from "@/components/ui/custom/form/fields/inputField/InputField";
+import { useToast } from "@/hooks/use-toast";
 
 const priorityEnum = z.nativeEnum(TaskPriority);
 
@@ -31,6 +32,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
   formRef,
 }) => {
   const { addTask, editTask } = useTasksStore();
+  const { toast } = useToast();
 
   const form = useForm<TaskInitials>({
     resolver: zodResolver(formSchema),
@@ -41,13 +43,25 @@ const TaskForm: React.FC<TaskFormProps> = ({
     },
   });
 
-  const onSubmit = (values: TaskInitials) => {
-    console.log("values: ", values);
+  const onSubmit = async (values: TaskInitials) => {
+    try {
+      if (task) {
+        await editTask(task.id, values);
+      } else {
+        await addTask(values);
+      }
 
-    if (task) {
-      editTask(task.id, values);
-    } else {
-      addTask(values);
+      toast({
+        title: "Success",
+        description: `You successfully ${task?.id ? "edit" : "add"} task: "${
+          values.title
+        }"`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
     }
   };
 

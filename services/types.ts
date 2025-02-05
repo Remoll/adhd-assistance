@@ -15,11 +15,25 @@ interface ResponseError {
   data: null;
 }
 
-enum Method {
+enum AxiosMethod {
+  get = "get",
+  post = "post",
+  put = "put",
+  delete = "delete",
+  patch = "patch",
+}
+
+enum DbMethod {
   post = "POST",
   get = "GET",
   put = "PUT",
   delete = "DELETE",
 }
 
-export { type Result, type ResponseSuccess, type ResponseError, Method };
+export {
+  type Result,
+  type ResponseSuccess,
+  type ResponseError,
+  AxiosMethod,
+  DbMethod,
+};
