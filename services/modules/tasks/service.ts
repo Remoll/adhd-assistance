@@ -1,7 +1,7 @@
 import { Task, TaskInitials } from "@/components/tasks/types";
 import supabase from "@/utils/supabase/supabaseClient";
-import { Result } from "../types";
-import dataBaseResponseHandler from "../dataBaseResponseHandler";
+import { Result } from "../../types";
+import dataBaseResponseHandler from "@/services/dataBaseResponseHandler/dataBaseResponseHandler";
 
 const TABLE = "tasks";
 

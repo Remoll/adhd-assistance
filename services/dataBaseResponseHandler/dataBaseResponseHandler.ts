@@ -1,4 +1,4 @@
-import { ResponseError, ResponseSuccess, Result } from "./types";
+import { ResponseError, ResponseSuccess, Result } from "../types";
 
 const dataBaseResponseHandler = <T>(
   response: ResponseSuccess<T | T[]> | ResponseError | null | undefined

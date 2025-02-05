@@ -1,4 +1,8 @@
-import { fetchTaskById, editTask, removeTask } from "@/services/tasks/service";
+import {
+  fetchTaskById,
+  editTask,
+  removeTask,
+} from "@/services/modules/tasks/service";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

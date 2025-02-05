@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { fetchTasks, addTask } from "@/services/tasks/service";
+import { fetchTasks, addTask } from "@/services/modules/tasks/service";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;

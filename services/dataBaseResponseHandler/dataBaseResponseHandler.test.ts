@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import dataBaseResponseHandler from "./dataBaseResponseHandler";
-import { ResponseError, ResponseSuccess } from "./types";
+import { ResponseError, ResponseSuccess } from "../types";
 
 interface ExampleData {
   title: string;

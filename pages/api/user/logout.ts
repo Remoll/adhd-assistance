@@ -1,4 +1,4 @@
-import { logout } from "@/services/user/service";
+import { logout } from "@/services/modules/user/service";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
