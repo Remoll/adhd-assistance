@@ -8,13 +8,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "POST": {
       const task = req.body;
       const { data, error } = await addTask(task);
-      if (error) return res.status(500).json({ error });
+
+      if (error) {
+        return res.status(500).end();
+      }
       return res.status(200).json(data);
     }
 
     case "GET": {
       const { data, error } = await fetchTasks();
-      if (error) return res.status(500).json({ error });
+      if (error) return res.status(500).end();
       return res.status(200).json(data);
     }
 

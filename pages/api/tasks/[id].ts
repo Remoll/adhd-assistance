@@ -14,21 +14,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET": {
       const { data, error } = await fetchTaskById(id);
       if (error) {
-        return res.status(404).json({ error });
+        return res.status(404).end();
       }
       return res.status(200).json(data);
     }
 
     case "PUT": {
       const { data, error } = await editTask(id, req.body);
-      if (error) return res.status(500).json({ error });
+      if (error) return res.status(500).end();
       return res.status(200).json(data);
     }
 
     case "DELETE": {
       const { data, error } = await removeTask(id);
       if (error) {
-        return res.status(404).json({ error });
+        return res.status(404).end();
       }
       return res.status(200).json(data);
     }

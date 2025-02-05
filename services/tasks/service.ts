@@ -1,13 +1,13 @@
 import { Task, TaskInitials } from "@/components/tasks/types";
 import supabase from "@/utils/supabase/supabaseClient";
-import responseHandler from "../responseHandler";
 import { Result } from "../types";
+import dataBaseResponseHandler from "../dataBaseResponseHandler";
 
 const TABLE = "tasks";
 
 const fetchTasks = async (): Promise<Result<Task[]>> => {
   const response = await supabase.from(TABLE).select("*");
-  return responseHandler<Task[]>(response);
+  return dataBaseResponseHandler<Task[]>(response);
 };
 
 const fetchTaskById = async (taskId: string): Promise<Result<Task | null>> => {
@@ -16,12 +16,12 @@ const fetchTaskById = async (taskId: string): Promise<Result<Task | null>> => {
     .select("*")
     .eq("id", taskId)
     .single();
-  return responseHandler<Task>(response);
+  return dataBaseResponseHandler<Task>(response);
 };
 
 const addTask = async (task: TaskInitials): Promise<Result<Task | null>> => {
   const response = await supabase.from(TABLE).insert([task]).select();
-  return responseHandler<Task>(response);
+  return dataBaseResponseHandler<Task>(response);
 };
 
 const editTask = async (
@@ -32,12 +32,12 @@ const editTask = async (
     .from(TABLE)
     .update(updatedData)
     .eq("id", taskId);
-  return responseHandler<null>(response);
+  return dataBaseResponseHandler<null>(response);
 };
 
 const removeTask = async (taskId: string): Promise<Result<Task | null>> => {
   const response = await supabase.from(TABLE).delete().eq("id", taskId);
-  return responseHandler<Task | null>(response);
+  return dataBaseResponseHandler<Task | null>(response);
 };
 
 export { fetchTasks, fetchTaskById, addTask, editTask, removeTask };

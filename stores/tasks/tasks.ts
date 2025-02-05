@@ -28,7 +28,7 @@ const useTasksStore = create<TaskStore>((set) => ({
       const { data } = await axios.post(TASK_URL, task);
       set((state) => ({ tasks: [...state.tasks, data[0]] }));
     } catch (error) {
-      console.error("Błąd dodawania zadania:", error);
+      console.error("Błąd dodawania zadania:", error.message);
     }
   },
   toggleTaskCompletion: async (taskId: string) => {
@@ -45,7 +45,7 @@ const useTasksStore = create<TaskStore>((set) => ({
         ),
       }));
     } catch (error) {
-      console.error("Błąd pobierania zadania:", error);
+      console.error("Błąd pobierania zadania:", error.message);
     }
   },
   editTask: async (taskId, newTaskData) => {
@@ -57,7 +57,7 @@ const useTasksStore = create<TaskStore>((set) => ({
         ),
       }));
     } catch (error) {
-      console.error("Błąd edycji zadania:", error);
+      console.error("Błąd edycji zadania:", error.message);
     }
   },
   removeTask: async (taskId: string) => {
@@ -67,7 +67,7 @@ const useTasksStore = create<TaskStore>((set) => ({
         tasks: state.tasks.filter((task) => task.id !== taskId),
       }));
     } catch (error) {
-      console.error("Błąd usuwania zadania:", error);
+      console.error("Błąd usuwania zadania:", error.message);
     }
   },
 }));
