@@ -15,4 +15,11 @@ interface ResponseError {
   data: null;
 }
 
-export type { Result, ResponseSuccess, ResponseError };
+enum Method {
+  post = "POST",
+  get = "GET",
+  put = "PUT",
+  delete = "DELETE",
+}
+
+export { type Result, type ResponseSuccess, type ResponseError, Method };

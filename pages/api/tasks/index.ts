@@ -1,24 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { fetchTasks, addTask } from "@/services/modules/tasks/service";
+import dbToApiAdapter from "@/services/dbToApiAdapter/dbToApiAdapter";
+import { Method } from "@/services/types";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   switch (method) {
-    case "POST": {
+    case Method.post: {
       const task = req.body;
-      const { data, error } = await addTask(task);
-
-      if (error) {
-        return res.status(500).end();
-      }
-      return res.status(200).json(data);
+      const result = await addTask(task);
+      return dbToApiAdapter(result, res);
     }
 
-    case "GET": {
-      const { data, error } = await fetchTasks();
-      if (error) return res.status(500).end();
-      return res.status(200).json(data);
+    case Method.get: {
+      const result = await fetchTasks();
+      return dbToApiAdapter(result, res);
     }
 
     default:

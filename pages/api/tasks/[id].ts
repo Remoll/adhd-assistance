@@ -1,8 +1,10 @@
+import dbToApiAdapter from "@/services/dbToApiAdapter/dbToApiAdapter";
 import {
   fetchTaskById,
   editTask,
   removeTask,
 } from "@/services/modules/tasks/service";
+import { Method } from "@/services/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,26 +17,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   switch (method) {
-    case "GET": {
-      const { data, error } = await fetchTaskById(id);
-      if (error) {
-        return res.status(404).end();
-      }
-      return res.status(200).json(data);
+    case Method.get: {
+      const result = await fetchTaskById(id);
+      return dbToApiAdapter(result, res);
     }
 
-    case "PUT": {
-      const { data, error } = await editTask(id, req.body);
-      if (error) return res.status(500).end();
-      return res.status(200).json(data);
+    case Method.put: {
+      const result = await editTask(id, req.body);
+      return dbToApiAdapter(result, res);
     }
 
-    case "DELETE": {
-      const { data, error } = await removeTask(id);
-      if (error) {
-        return res.status(404).end();
-      }
-      return res.status(200).json(data);
+    case Method.delete: {
+      const result = await removeTask(id);
+      return dbToApiAdapter(result, res);
     }
 
     default:
