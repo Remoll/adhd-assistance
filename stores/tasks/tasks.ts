@@ -26,8 +26,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   addTask: async (task) => {
     try {
       const { data } = await axios.post(TASK_URL, task);
-
-      set((state) => ({ tasks: [...state.tasks, data] }));
+      set((state) => ({ tasks: [...state.tasks, data[0]] }));
     } catch (error) {
       console.error("Błąd dodawania zadania:", error);
     }

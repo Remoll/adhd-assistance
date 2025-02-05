@@ -1,4 +1,4 @@
-import { supabase } from "@/utils/supabase/supabaseClient";
+import supabase from "@/utils/supabase/supabaseClient";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

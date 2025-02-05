@@ -1,6 +1,6 @@
 // TODO: make global request handler
 
-// import { supabase } from "./supabaseClient";
+// import supabase from "./supabaseClient";
 // import { Operation, Table } from "./types";
 
 // enum Table {
