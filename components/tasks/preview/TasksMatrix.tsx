@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import TasksPriorityBox from "./TasksPriorityBox";
 import { TaskPriority } from "../types";
 import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
 
 const TasksMatrix = () => {
   const { fetchTasks } = useTasksStore();
@@ -15,7 +16,7 @@ const TasksMatrix = () => {
       } catch (error) {
         toast({
           title: "Error",
-          description: error.message,
+          description: (error as AxiosError).message,
         });
       }
     };

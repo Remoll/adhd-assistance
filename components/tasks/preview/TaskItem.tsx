@@ -7,6 +7,7 @@ import CustomDialog from "@/components/ui/custom/customDialog/CustomDialog";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import TaskForm from "../form/TaskForm";
+import { AxiosError } from "axios";
 
 interface TaskItemProps {
   task: Task;
@@ -29,7 +30,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: (error as AxiosError).message,
       });
     }
   };
@@ -80,7 +81,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: (error as AxiosError).message,
       });
     }
   };

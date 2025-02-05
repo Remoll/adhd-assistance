@@ -1,5 +1,6 @@
+// TODO: think of TanStack Query
 import { AxiosMethod } from "../types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const axiosResponseHandler = async <T, U = T>(
   method: AxiosMethod,
@@ -10,7 +11,8 @@ const axiosResponseHandler = async <T, U = T>(
     const { data } = await axios[method]<T>(url, payload);
     return { data, error: null };
   } catch (error) {
-    return { data: null, error: error.message };
+    const axiosError = error as AxiosError;
+    return { data: null, error: axiosError.message };
   }
 };
 

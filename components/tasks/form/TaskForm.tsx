@@ -11,6 +11,7 @@ import React from "react";
 import DateTimePickerField from "@/components/ui/custom/form/fields/dateTimePickerField/DateTimePickerField";
 import InputField from "@/components/ui/custom/form/fields/inputField/InputField";
 import { useToast } from "@/hooks/use-toast";
+import { AxiosError } from "axios";
 
 const priorityEnum = z.nativeEnum(TaskPriority);
 
@@ -60,7 +61,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
     } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: (error as AxiosError).message,
       });
     }
   };
