@@ -5,11 +5,11 @@ import { AxiosMethod } from "../types";
 
 const mocks = vi.hoisted(() => ({
   axios: {
-    get: vi.fn(),
-    post: vi.fn(),
-    put: vi.fn(),
-    delete: vi.fn(),
-    patch: vi.fn(),
+    get: vi.fn().mockResolvedValue({ data: {} }),
+    post: vi.fn().mockResolvedValue({ data: {} }),
+    put: vi.fn().mockResolvedValue({ data: {} }),
+    delete: vi.fn().mockResolvedValue({ data: {} }),
+    patch: vi.fn().mockResolvedValue({ data: {} }),
   },
 }));
 
@@ -45,25 +45,22 @@ describe("axiosRequestHandler", () => {
     });
   });
 
-  it("return data and error as null on success", async () => {
-    const data = { title: "Title1", id: 1 };
-
+  it("return data on success", async () => {
+    interface DataType {
+      title: string;
+      id: number;
+    }
+    const data: DataType = { title: "Title1", id: 1 };
     mocks.axios.get.mockResolvedValue({ data });
-
-    const result = await axiosRequestHandler(AxiosMethod.get, "");
-
-    expect(result.data).toEqual(data);
-    expect(result.error).toBeNull();
+    const result = await axiosRequestHandler<DataType>(AxiosMethod.get, "");
+    expect(result).toEqual(data);
   });
 
-  it("return data as null and error message on fail", async () => {
+  it("throw error on fail", async () => {
     const errorMessage = "Error message";
-
     mocks.axios.get.mockRejectedValue(new Error(errorMessage));
-
-    const result = await axiosRequestHandler(AxiosMethod.get, "");
-
-    expect(result.data).toBeNull();
-    expect(result.error).toEqual(errorMessage);
+    await expect(axiosRequestHandler(AxiosMethod.get, "")).rejects.toThrow(
+      errorMessage
+    );
   });
 });
