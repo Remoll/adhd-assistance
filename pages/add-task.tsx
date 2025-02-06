@@ -1,7 +1,7 @@
 import TaskForm from "@/components/tasks/form/TaskForm";
 import React from "react";
 
-const Planner = () => {
+const AddTask = () => {
   return (
     <>
       <h1 className="text-2xl font-bold">Planer</h1>
@@ -10,4 +10,4 @@ const Planner = () => {
   );
 };
 
-export default Planner;
+export default AddTask;

@@ -7,15 +7,19 @@ const Header = () => {
   const { logoutUser } = useUserStore();
 
   const pages = [
-    { href: "/", label: "Dashboard" },
-    { href: "/planner", label: "Planer" },
-    { href: "/settings", label: "Ustawienia" },
+    { href: "/tasks", label: "Tasks" },
+    { href: "/add-task", label: "Add task" },
+    { href: "/settings", label: "Settings" },
   ];
 
   return (
     <header className="bg-gray-900 text-white py-4 shadow-lg">
       <nav className="container mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold tracking-wide">ADHD AI Assistance</h1>
+        <Link href="/">
+          <h1 className="text-2xl font-bold tracking-wide">
+            ADHD AI Assistance
+          </h1>
+        </Link>
         <ul className="flex gap-6 items-center">
           {pages.map((page) => (
             <li key={page.href}>
@@ -28,7 +32,7 @@ const Header = () => {
             </li>
           ))}
           <li>
-            <Button onClick={logoutUser} variant="destructive">
+            <Button onClick={logoutUser} variant="secondary">
               Logout
             </Button>
           </li>
