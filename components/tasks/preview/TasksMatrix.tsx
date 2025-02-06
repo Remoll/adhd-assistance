@@ -1,4 +1,4 @@
-import { useTasksStore } from "@/stores/tasks/tasks";
+import { useTasksStore } from "@/stores/tasks/store";
 import { useEffect } from "react";
 import TasksPriorityBox from "./TasksPriorityBox";
 import { TaskPriority } from "../types";

@@ -2,7 +2,7 @@ import { Pen, Trash } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import React, { useRef } from "react";
 import { Task } from "../types";
-import { useTasksStore } from "@/stores/tasks/tasks";
+import { useTasksStore } from "@/stores/tasks/store";
 import CustomDialog from "@/components/ui/custom/customDialog/CustomDialog";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";

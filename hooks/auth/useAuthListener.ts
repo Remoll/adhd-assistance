@@ -1,7 +1,7 @@
 // TODO: handle api ??
 
 import { useEffect } from "react";
-import useUserStore from "@/stores/user/user";
+import useUserStore from "@/stores/user/store";
 import supabase from "@/utils/supabase/supabaseClient";
 
 export const useAuthListener = () => {

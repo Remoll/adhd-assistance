@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "../../ui/button";
-import useUserStore from "@/stores/user/user";
+import useUserStore from "@/stores/user/store";
 
 const Header = () => {
   const { logoutUser } = useUserStore();

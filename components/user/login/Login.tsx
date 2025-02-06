@@ -1,4 +1,4 @@
-import useUserStore from "@/stores/user/user";
+import useUserStore from "@/stores/user/store";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

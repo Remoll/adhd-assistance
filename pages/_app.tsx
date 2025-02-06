@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Login from "@/components/user/login/Login";
 import Register from "@/components/user/register/Register";
 import { useAuthListener } from "@/hooks/auth/useAuthListener";
-import useUserStore from "@/stores/user/user";
+import useUserStore from "@/stores/user/store";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useState } from "react";

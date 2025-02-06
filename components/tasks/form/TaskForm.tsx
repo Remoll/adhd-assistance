@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import SelectField from "@/components/ui/custom/form/fields/selectField/SelectField";
-import { useTasksStore } from "@/stores/tasks/tasks";
+import { useTasksStore } from "@/stores/tasks/store";
 import { priorityOptions } from "../utils";
 import { Task, TaskInitials, TaskPriority } from "../types";
 import React from "react";

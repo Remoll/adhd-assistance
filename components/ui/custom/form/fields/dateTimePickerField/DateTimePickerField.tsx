@@ -26,7 +26,6 @@ const DateTimePickerField = <T extends FieldValues>({
   label,
 }: FieldProps<T>) => {
   const handleDateSelect = (date: Date | undefined) => {
-    console.log("date: ", date);
     if (date) {
       // TODO: fix types
       form.setValue(fieldId, date as PathValue<T, Path<T>>);
