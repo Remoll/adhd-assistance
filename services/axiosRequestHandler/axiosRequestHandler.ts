@@ -2,7 +2,7 @@
 import { AxiosMethod } from "../types";
 import axios, { AxiosError } from "axios";
 
-const axiosResponseHandler = async <T, U = T>(
+const axiosRequestHandler = async <T, U = T>(
   method: AxiosMethod,
   url: string,
   payload?: U | T
@@ -16,4 +16,4 @@ const axiosResponseHandler = async <T, U = T>(
   }
 };
 
-export default axiosResponseHandler;
+export default axiosRequestHandler;

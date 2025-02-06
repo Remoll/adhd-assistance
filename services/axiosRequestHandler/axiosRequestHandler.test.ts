@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import axios from "axios";
-import axiosResponseHandler from "./axiosResponseHandler";
+import axiosRequestHandler from "./axiosRequestHandler";
 import { AxiosMethod } from "../types";
 
 const mocks = vi.hoisted(() => ({
@@ -17,30 +17,30 @@ vi.mock("axios", () => ({
   default: mocks.axios,
 }));
 
-describe("axiosResponseHandler", () => {
+describe("axiosRequestHandler", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   describe("called proper method", () => {
     it("called get", async () => {
-      await axiosResponseHandler(AxiosMethod.get, "");
+      await axiosRequestHandler(AxiosMethod.get, "");
       expect(axios.get).toBeCalled();
     });
     it("called post", async () => {
-      await axiosResponseHandler(AxiosMethod.post, "");
+      await axiosRequestHandler(AxiosMethod.post, "");
       expect(axios.post).toBeCalled();
     });
     it("called put", async () => {
-      await axiosResponseHandler(AxiosMethod.put, "");
+      await axiosRequestHandler(AxiosMethod.put, "");
       expect(axios.put).toBeCalled();
     });
     it("called delete", async () => {
-      await axiosResponseHandler(AxiosMethod.delete, "");
+      await axiosRequestHandler(AxiosMethod.delete, "");
       expect(axios.delete).toBeCalled();
     });
     it("called patch", async () => {
-      await axiosResponseHandler(AxiosMethod.patch, "");
+      await axiosRequestHandler(AxiosMethod.patch, "");
       expect(axios.patch).toBeCalled();
     });
   });
@@ -50,7 +50,7 @@ describe("axiosResponseHandler", () => {
 
     mocks.axios.get.mockResolvedValue({ data });
 
-    const result = await axiosResponseHandler(AxiosMethod.get, "");
+    const result = await axiosRequestHandler(AxiosMethod.get, "");
 
     expect(result.data).toEqual(data);
     expect(result.error).toBeNull();
@@ -61,7 +61,7 @@ describe("axiosResponseHandler", () => {
 
     mocks.axios.get.mockRejectedValue(new Error(errorMessage));
 
-    const result = await axiosResponseHandler(AxiosMethod.get, "");
+    const result = await axiosRequestHandler(AxiosMethod.get, "");
 
     expect(result.data).toBeNull();
     expect(result.error).toEqual(errorMessage);

@@ -1,6 +1,6 @@
 import { Task, TaskInitials } from "@/components/tasks/types";
 import { create } from "zustand";
-import axiosResponseHandler from "@/services/axiosResponseHandler/axiosResponseHandler";
+import axiosRequestHandler from "@/services/axiosRequestHandler/axiosRequestHandler";
 import { AxiosMethod } from "@/services/types";
 
 interface TaskStore {
@@ -18,7 +18,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   tasks: [],
 
   fetchTasks: async () => {
-    const { data, error } = await axiosResponseHandler<Task[]>(
+    const { data, error } = await axiosRequestHandler<Task[]>(
       AxiosMethod.get,
       TASK_URL
     );
@@ -31,7 +31,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   },
 
   addTask: async (task) => {
-    const { data, error } = await axiosResponseHandler<Task[], TaskInitials>(
+    const { data, error } = await axiosRequestHandler<Task[], TaskInitials>(
       AxiosMethod.post,
       TASK_URL,
       task
@@ -51,7 +51,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   },
 
   toggleTaskCompletion: async (taskId: string) => {
-    const { data: getData, error: getError } = await axiosResponseHandler<Task>(
+    const { data: getData, error: getError } = await axiosRequestHandler<Task>(
       AxiosMethod.get,
       `${TASK_URL}/${taskId}`
     );
@@ -66,7 +66,7 @@ const useTasksStore = create<TaskStore>((set) => ({
 
     const taskNewData = { ...getData, completed: !getData.completed };
 
-    const { error: putError } = await axiosResponseHandler<Task>(
+    const { error: putError } = await axiosRequestHandler<Task>(
       AxiosMethod.put,
       `${TASK_URL}/${taskId}`,
       taskNewData
@@ -84,7 +84,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   },
 
   editTask: async (taskId, taskNewData) => {
-    const { error } = await axiosResponseHandler<TaskInitials>(
+    const { error } = await axiosRequestHandler<TaskInitials>(
       AxiosMethod.put,
       `${TASK_URL}/${taskId}`,
       taskNewData
@@ -102,7 +102,7 @@ const useTasksStore = create<TaskStore>((set) => ({
   },
 
   removeTask: async (taskId: string) => {
-    const { data: getData, error: getError } = await axiosResponseHandler<Task>(
+    const { data: getData, error: getError } = await axiosRequestHandler<Task>(
       AxiosMethod.get,
       `${TASK_URL}/${taskId}`
     );
@@ -115,7 +115,7 @@ const useTasksStore = create<TaskStore>((set) => ({
       throw new Error("Can't find task in server");
     }
 
-    const { error: deleteError } = await axiosResponseHandler<TaskInitials>(
+    const { error: deleteError } = await axiosRequestHandler<TaskInitials>(
       AxiosMethod.delete,
       `${TASK_URL}/${taskId}`
     );
