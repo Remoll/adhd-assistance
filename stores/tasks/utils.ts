@@ -69,6 +69,8 @@ const handleRemoveTask = async (taskId: string) => {
 };
 
 export {
+  handleTasksRequest,
+  handleFetchTaskById,
   handleFetchTasks,
   handleAddTasks,
   handleToggleTaskCompletion,
