@@ -36,7 +36,6 @@ const HomePage: React.FC<HomePageProps> = ({ title, description }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  //   const data = await fetchHomePageData();
   return {
     props: {
       title: "ADHD AI Assistance",

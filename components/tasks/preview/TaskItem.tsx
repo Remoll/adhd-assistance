@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import TaskForm from "../form/TaskForm";
 import { AxiosError } from "axios";
+import suggestTaskSteps from "@/utils/openAi/suggestTaskSteps";
 
 interface TaskItemProps {
   task: Task;
@@ -101,6 +102,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
       </h3>
       <CustomDialog {...editButtonProps} />
       <CustomDialog {...removeButtonProps} />
+      <Button onClick={() => suggestTaskSteps(task.title)}>AI</Button>
     </div>
   );
 };
