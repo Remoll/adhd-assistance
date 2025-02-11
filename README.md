@@ -1,40 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Focus Flow
 
-## Getting Started
+**Focus Flow** is an innovative productivity application designed to help users streamline their daily workflow by managing tasks efficiently and integrating cutting-edge AI assistance. With a modern, responsive design and robust backend services, Focus Flow delivers an optimal experience for users aiming to enhance their focus and productivity.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Focus Flow aims to deliver a seamless task management experience by combining the best practices of modern web development with intelligent automation. The application features a dynamic task planner, secure user authentication, AI-powered assistance, and responsive UI components—all built using state-of-the-art technologies.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Planned Functionalities
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **Dynamic Task Planner:**
+  - Create, edit, and remove tasks.
+  - Break down complex tasks into smaller, manageable steps.
+  - Prioritize tasks using an interactive Eisenhower Matrix.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- **User Authentication:**
+  - Secure login and logout functionality powered by Supabase.
+  - Session persistence to maintain user state across page refreshes.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- **AI Integration:**
+  - Leverage OpenAI’s API (via secure server-side API routes) to provide helpful AI responses.
+  - Customizable prompts for specific tasks (e.g., generating cleaning plans based on room photos).
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Responsive UI & Forms:**
+  - Built with React, Next.js, and Tailwind CSS for a responsive, accessible design.
+  - Uses react-hook-form with Zod for robust form validation.
 
-## Learn More
+- **State Management:**
+  - Global state is managed with Zustand to ensure smooth, client-side interactions.
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+**Frontend:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Next.js with React and TypeScript
+- Tailwind CSS for styling
+- React Hook Form and Zod for form validation
+- Zustand for global state management
 
-## Deploy on Vercel
+**Backend:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Supabase for authentication, database, and real-time subscriptions
+- Next.js API Routes for secure server-side handling (including OpenAI integration)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+**AI:**
+
+- OpenAI API (integrated securely via server-side endpoints)
+
+**Testing:**
+
+- Vitest for unit and integration testing
+- Axios for HTTP requests (with custom request handlers)
