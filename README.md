@@ -50,3 +50,26 @@ Focus Flow aims to deliver a seamless task management experience by combining th
 
 - Vitest for unit and integration testing
 - Axios for HTTP requests (with custom request handlers)
+
+
+## Usage
+
+### Authentication
+
+Users can log in and log out securely. The app maintains session persistence so that users remain logged in across page refreshes.
+
+### Task Management
+
+Users can add new tasks, break them down into subtasks, edit, and delete tasks. Tasks are prioritized using an interactive matrix for better organization.
+
+### AI Features
+
+Users can test AI-powered functionalities (e.g., generating creative responses) via secure server-side endpoints, ensuring that sensitive API keys remain protected.
+
+### Responsive Interface
+
+The application features a modern, responsive UI that adapts to various devices, ensuring a smooth user experience.
+
+## Deployment
+
+Focus Flow is built with Next.js, making it easy to deploy on platforms like Vercel or Netlify. These platforms support Next.js features such as SSG, SSR, and ISR, ensuring fast and scalable performance.
